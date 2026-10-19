@@ -119,6 +119,26 @@ public class ListaSimple <T>{
         return -1;
     }
 
+    public void insertarEnPosicion(T dato,int posicion){
+        int tamano=getTamano();
+        if (posicion<0||posicion>tamano){
+            return;
+        }
+        if (posicion==0){
+            insertarInicio(dato);
+        } else if (posicion==tamano){
+            insertarFinal(dato);
+        } else {
+            Nodo<T> anterior=inicio;
+            for (int i=0;i<posicion-1;i++){
+                anterior=anterior.getSig();
+            }
+            Nodo<T> nuevo=new Nodo<>(dato);
+            nuevo.setSig(anterior.getSig());
+            anterior.setSig(nuevo);
+        }
+    }
+
     public T eliminarPosicion(int posicion){
         int contador=0;
         Nodo<T>n=inicio;
@@ -139,5 +159,38 @@ public class ListaSimple <T>{
             contador++;
         }
         return eliminarFinal();
+    }
+
+    public boolean vacia(){
+        return inicio==null;
+    }
+
+    public T verFinal(){
+        Nodo<T>r=inicio;
+        while (r.getSig()!=null){
+            r=r.getSig();
+        }
+        return r.getInfo();
+    }
+
+    public int getTamano(){
+        int contador=0;
+        Nodo<T> n=inicio;
+        while (n!=null){
+            contador++;
+            n=n.getSig();
+        }
+        return contador;
+    }
+
+    public T getElemento(int posicion){
+        if (posicion<0){
+            return null;
+        }
+        Nodo<T> n=inicio;
+        for (int i=0;i<posicion;i++){
+            n=n.getSig();
+        }
+        return n.getInfo();
     }
 }

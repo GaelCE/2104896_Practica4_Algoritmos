@@ -10,7 +10,6 @@ public class Carta implements Comparable<Carta> {
     private int valor;
     private Palo palo;
     private String color;
-    private int valorBajo;
     private boolean faceup;
 
     /**
@@ -23,11 +22,6 @@ public class Carta implements Comparable<Carta> {
         this.valor=valor;
         this.palo=palo;
         this.color=color;
-        if(valor==14){
-            valorBajo=1;
-        }else{
-            valorBajo=valor;
-        }
         faceup=false;
     }
 
@@ -59,7 +53,7 @@ public class Carta implements Comparable<Carta> {
             return "\uD83C\uDCA0";
         }
         return switch(valor){
-            case 14 -> "A"+palo.getFigura();
+            case 1 -> "A"+palo.getFigura();
             case 11 -> "J"+palo.getFigura();
             case 12 -> "Q"+palo.getFigura();
             case 13 -> "K"+palo.getFigura();
@@ -83,7 +77,7 @@ public class Carta implements Comparable<Carta> {
      * @return true si se puede colocar sobre ella
      */
     public boolean puedeIrSobre(Carta carta){
-        return palo.equals(carta.palo)&&valorBajo==carta.valorBajo-1;
+        return palo.equals(carta.palo)&&valor==carta.valor-1;
     }
 
     /**
@@ -93,7 +87,7 @@ public class Carta implements Comparable<Carta> {
      * @return true si es la siguiente en la fundación
      */
     public boolean esSiguienteEnPalo(Carta carta){
-        return palo.equals(carta.palo)&&valorBajo==carta.valorBajo+1;
+        return palo.equals(carta.palo)&&valor==carta.valor+1;
     }
 
     public boolean esRey(){
@@ -101,8 +95,9 @@ public class Carta implements Comparable<Carta> {
     }
 
     public boolean esAs(){
-        return valor==14;
+        return valor==1;
     }
+
 
     /**
      * Compara primero por valorBajo (el As es la carta más baja) y, si es
@@ -110,8 +105,8 @@ public class Carta implements Comparable<Carta> {
      */
     @Override
     public int compareTo(Carta o){
-        if(valorBajo!=o.valorBajo){
-            return Integer.compare(valorBajo,o.valorBajo);
+        if(valor!=o.valor){
+            return Integer.compare(valor,o.valor);
         }
         return Integer.compare(palo.getPeso(),o.palo.getPeso());
     }
@@ -126,9 +121,5 @@ public class Carta implements Comparable<Carta> {
 
     public String getColor(){
         return color;
-    }
-
-    public int getValorBajo(){
-        return valorBajo;
     }
 }

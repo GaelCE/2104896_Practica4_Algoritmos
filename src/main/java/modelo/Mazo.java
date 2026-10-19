@@ -35,7 +35,7 @@ public class Mazo {
     }
 
     private void llenar() {
-        for (int i = 2; i <=14 ; i++) {
+        for (int i = 1; i <=13 ; i++) {
             for (Palo palo : Palo.values()) {
                 Carta c = new Carta(i,palo, palo.getColor());
                 cartas.insertaFinal(c);
