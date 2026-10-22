@@ -8,25 +8,30 @@ public class Movimiento{
     private int indiceDestino;
 
     public Movimiento(Carta carta,TipoZona zonaOrigen,int indiceOrigen,TipoZona zonaDestino,int indiceDestino){
+        this.carta=carta;
+        this.zonaOrigen=zonaOrigen;
+        this.indiceOrigen=indiceOrigen;
+        this.zonaDestino=zonaDestino;
+        this.indiceDestino=indiceDestino;
     }
 
     public Carta getCarta(){
-        return null;
+        return carta;
     }
 
     public TipoZona getZonaOrigen(){
-        return null;
+        return zonaOrigen;
     }
 
     public int getIndiceOrigen(){
-        return 0;
+        return indiceOrigen;
     }
 
     public TipoZona getZonaDestino(){
-        return null;
+        return zonaDestino;
     }
 
     public int getIndiceDestino(){
-        return 0;
+        return indiceDestino;
     }
 }
