@@ -3,13 +3,13 @@ package modelo;
 public class EightOff{
     private static final int NUM_COLUMNAS=8;
     private static final int NUM_CELDAS=8;
-    private static final int NUM_TABLEAUS=4;
+    private static final int NUM_FUNDACIONES =4;
     private static final int CARTAS_POR_COLUMNA=6;
     private static final int CARTAS_POR_PALO=13;
     private Mazo mazo;
     private ListaSimple<Carta>[] columnas;
     private ListaSimple<Carta> celdas;
-    private ListaSimple<Carta>[] tableaus;
+    private ListaSimple<Carta>[] fundaciones;
     private ListaSimple<Movimiento> historial;
 
     public EightOff(){
@@ -71,14 +71,14 @@ public class EightOff{
             return zonaOrigen==TipoZona.COLUMNA&&celdas.getTamano()<NUM_CELDAS;
         }
 
-        if (zonaDestino==TipoZona.TABLEAU){
+        if (zonaDestino==TipoZona.FUNDACION){
             if (indiceDestino!=carta.getPalo().getPeso()-1){
                 return false;
             }
-            if (tableaus[indiceDestino].vacia()){
+            if (fundaciones[indiceDestino].vacia()){
                 return carta.esAs();
             }
-            return carta.esSiguienteEnPalo(tableaus[indiceDestino].verFinal());
+            return carta.esSiguienteEnPalo(fundaciones[indiceDestino].verFinal());
         }
 
         return false;
@@ -103,7 +103,7 @@ public class EightOff{
             destino=celdas.getTamano();
             celdas.insertarFinal(carta);
         } else {
-            tableaus[destino].insertarFinal(carta);
+            fundaciones[destino].insertarFinal(carta);
         }
 
         historial.insertarInicio(new Movimiento(carta,zonaOrigen,indiceOrigen,zonaDestino,destino));
@@ -122,7 +122,7 @@ public class EightOff{
         } else if (movimiento.getZonaDestino()==TipoZona.CELDA){
             carta=celdas.eliminarPosicion(movimiento.getIndiceDestino());
         } else {
-            carta=tableaus[movimiento.getIndiceDestino()].eliminarFinal();
+            carta= fundaciones[movimiento.getIndiceDestino()].eliminarFinal();
         }
 
         if (movimiento.getZonaOrigen()==TipoZona.COLUMNA){
@@ -143,8 +143,8 @@ public class EightOff{
         int cantidadDestinos;
         if (zonaDestino==TipoZona.COLUMNA){
             cantidadDestinos=NUM_COLUMNAS;
-        } else if (zonaDestino==TipoZona.TABLEAU){
-            cantidadDestinos=NUM_TABLEAUS;
+        } else if (zonaDestino==TipoZona.FUNDACION){
+            cantidadDestinos= NUM_FUNDACIONES;
         } else {
             cantidadDestinos=1;
         }
@@ -165,9 +165,9 @@ public class EightOff{
     }
 
     public Movimiento obtenerPista(){
-        Movimiento pista=buscarMovimiento(TipoZona.COLUMNA,TipoZona.TABLEAU);
+        Movimiento pista=buscarMovimiento(TipoZona.COLUMNA,TipoZona.FUNDACION);
         if (pista==null){
-            pista=buscarMovimiento(TipoZona.CELDA,TipoZona.TABLEAU);
+            pista=buscarMovimiento(TipoZona.CELDA,TipoZona.FUNDACION);
         }
         if (pista==null){
             pista=buscarMovimiento(TipoZona.CELDA,TipoZona.COLUMNA);
@@ -186,8 +186,8 @@ public class EightOff{
     }
 
     public boolean Gano(){
-        for (int i=0;i<NUM_TABLEAUS;i++){
-            if (tableaus[i].getTamano()<CARTAS_POR_PALO){
+        for (int i = 0; i< NUM_FUNDACIONES; i++){
+            if (fundaciones[i].getTamano()<CARTAS_POR_PALO){
                 return false;
             }
         }
@@ -212,7 +212,7 @@ public class EightOff{
             }
             return 0;
         }
-        return tableaus[indice].getTamano();
+        return fundaciones[indice].getTamano();
     }
 
     public Carta getCarta(TipoZona zona,int indice,int posicion){
@@ -222,7 +222,7 @@ public class EightOff{
         if (zona==TipoZona.CELDA){
             return celdas.getElemento(indice);
         }
-        return tableaus[indice].getElemento(posicion);
+        return fundaciones[indice].getElemento(posicion);
     }
 
     public void inicializarArreglos(){
@@ -231,9 +231,9 @@ public class EightOff{
             columnas[i]=new ListaSimple<>();
         }
         celdas=new ListaSimple<>();
-        tableaus=new ListaSimple[NUM_TABLEAUS];
-        for (int i=0;i<NUM_TABLEAUS;i++){
-            tableaus[i]=new ListaSimple<>();
+        fundaciones =new ListaSimple[NUM_FUNDACIONES];
+        for (int i = 0; i< NUM_FUNDACIONES; i++){
+            fundaciones[i]=new ListaSimple<>();
         }
         historial=new ListaSimple<>();
     }

@@ -25,7 +25,7 @@ public class Controlador{
     public void seleccionar(TipoZona zona,int indice){
         pista=null;
         if (!haySeleccion()){
-            if (zona!=TipoZona.TABLEAU&&juego.getCantidadCartas(zona,indice)>0){
+            if (zona!=TipoZona.FUNDACION&&juego.getCantidadCartas(zona,indice)>0){
                 zonaSeleccionada=zona;
                 indiceSeleccionado=indice;
             }
